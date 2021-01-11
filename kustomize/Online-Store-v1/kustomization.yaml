@@ -1,0 +1,39 @@
+namePrefix: production-
+
+commonLabels:
+  app: my-hello
+  kustomize-used: dtrue
+
+commonAnnotations:
+  note: Hello, I am production!
+
+resources:
+- api_crd.yaml
+
+configurations:
+- kustomize-config.yaml
+
+configMapGenerator:
+- name: deployment-configs
+- name: params-configs
+- name: store-api
+  files:
+  - Online-Store_v1.0.0.zip
+
+patchesStrategicMerge:
+- deployment-configs.yaml
+- params_cm.yaml
+
+# kustomized-used: true
+
+#kubect label change kustomized-used: false
+
+#kubectl kustomize over/ | kubectl apply -f 
+
+#kubectl delete cm -l kustomized-used: false
+
+
+
+
+
+
